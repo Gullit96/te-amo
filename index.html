@@ -1,19 +1,149 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coração</title>
-    <link rel="stylesheet" href="heart.css">
-    <link
-    href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap"
-    rel="stylesheet"
-  />
- 
+  <meta charset="UTF-8" />
+  <title>Surpresa de Amor</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background-color: #ffe4e1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* Mensagem de feliz aniversário de namoro com contador */
+    #mensagem {
+      position: absolute;
+      top: 20px;
+      font-size: 24px;
+      color: #d6336c;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #fff;
+      text-align: center;
+    }
+
+    /* Botão */
+    #botao {
+      padding: 20px 40px;
+      font-size: 24px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff69b4;
+      cursor: pointer;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Imagem do gatinho */
+    #gato {
+      margin-top: 20px;
+      display: none; /* inicialmente escondida */
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    /* Estilo para os corações */
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      color: red;
+      opacity: 0.8;
+      animation: floatUp 4s linear forwards;
+      pointer-events: none;
+    }
+
+    /* Animação de flutuação dos corações */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-600px) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
-<body>  
-   
-    <div class="heart"></div>  
+<body>
+  <div id="mensagem">Feliz <span id="contador">2 anos</span> de namoro! 💖</div>
+  <button id="botao">Clique com carinho!</button>
+  <img id="gato" src="gatinho.jpg" alt="" />
+
+  <script>
+    const botao = document.getElementById('botao');
+    const gato = document.getElementById('gato');
+    const contadorSpan = document.getElementById('contador');
+
+    // Define a data de início (exemplo: hoje)
+    const inicio = new Date(); // ajuste aqui se desejar uma data específica
+    // Define a data alvo para 2 anos depois
+    const alvo = new Date(inicio.getFullYear() + 2, inicio.getMonth(), inicio.getDate(), inicio.getHours(), inicio.getMinutes(), inicio.getSeconds());
+
+    // Função para atualizar o contador
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = alvo - agora;
+      
+      if (diff <= 0) {
+        // Se passou o tempo, mostra "0"
+        contadorSpan.innerHTML = "0 dias, 0 horas, 0 minutos, 0 segundos";
+        clearInterval(intervalo);
+        return;
+      }
+
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diff / (1000 * 60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
+
+      contadorSpan.innerHTML = `${dias} dias, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+    }
+
+    // Atualiza o contador a cada segundo
+    const intervalo = setInterval(atualizarContador, 1000);
+    atualizarContador();
+
+    // Função para criar corações
+    function criarCoração() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '❤️';
+
+      // Posicionamento aleatório na horizontal
+      const posX = Math.random() * window.innerWidth;
+      heart.style.left = `${posX}px`;
+
+      // Adiciona o coração ao corpo
+      document.body.appendChild(heart);
+
+      // Remove o coração após a animação
+      heart.addEventListener('animationend', () => {
+        heart.remove();
+      });
+    }
+
+    // Dispara corações em intervalos
+    setInterval(criarCoração, 300);
+
+    // Evento do botão
+    botao.addEventListener('click', () => {
+      // Esconde o botão ao clicar
+      botao.style.display = 'none';
+
+      // Torna a imagem visível
+      gato.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
