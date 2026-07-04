@@ -20,53 +20,48 @@
       text-align: center;
     }
 
-    /* Mensagem de feliz aniversário de namoro com contador */
     #mensagem {
       position: absolute;
       top: 10px;
       width: 100%;
-      font-size: 8vw; /* aumentado o tamanho da fonte */
+      font-size: 8vw;
       color: #d6336c;
       font-weight: bold;
       text-shadow: 1px 1px 2px #fff;
       padding: 0 10px;
     }
 
-    /* Botão */
     #botao {
-      padding: 4vh 8vw; /* maior tamanho do botão */
-      font-size: 6vw; /* tamanho maior da fonte do botão */
+      padding: 4vh 8vw;
+      font-size: 6vw;
       border: none;
-      border-radius: 12px; /* bordas mais arredondadas */
+      border-radius: 12px;
       background-color: #ff69b4;
       cursor: pointer;
       z-index: 1;
       margin-top: 50px;
     }
 
-    /* Imagem do gatinho */
     #gato {
       margin-top: 20px;
-      display: none; /* inicialmente escondida */
-      max-width: 90%; /* maior para caber bem na tela */
+      display: none;
+      max-width: 90%;
       height: auto;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       z-index: 1;
     }
 
-    /* Estilo para os corações */
     .heart {
       position: absolute;
       bottom: -50px;
-      font-size: 8vw; /* tamanho proporcional ao viewport */
+      font-size: 8vw;
       color: red;
       opacity: 0.8;
       animation: floatUp 4s linear forwards;
       pointer-events: none;
     }
 
-    /* Animação de flutuação dos corações */
     @keyframes floatUp {
       0% {
         transform: translateY(0) scale(1);
@@ -80,7 +75,7 @@
   </style>
 </head>
 <body>
-  <div id="mensagem">Feliz <span id="contador">2 anos</span> de namoro! 💖</div>
+  <div id="mensagem">Feliz <span id="contador">0</span> dias de namoro! 💖</div>
   <button id="botao">Clique com carinho!</button>
   <img id="gato" src="gatinho.jpg" alt="Gatinho fofo" />
 
@@ -89,63 +84,37 @@
     const gato = document.getElementById('gato');
     const contadorSpan = document.getElementById('contador');
 
-    // Define a data de início (exemplo: hoje)
-    const inicio = new Date(); // ajuste aqui se desejar uma data específica
-    // Define a data alvo para 2 anos depois
-    const alvo = new Date(inicio.getFullYear() + 2, inicio.getMonth(), inicio.getDate(), inicio.getHours(), inicio.getMinutes(), inicio.getSeconds());
+    // Data de início do namoro
+    const dataInicio = new Date('2024-07-07T00:00:00');
 
-    // Função para atualizar o contador
     function atualizarContador() {
       const agora = new Date();
-      const diff = alvo - agora;
-      
-      if (diff <= 0) {
-        // Se passou o tempo, mostra "0"
-        contadorSpan.innerHTML = "0 dias, 0 horas, 0 minutos, 0 segundos";
-        clearInterval(intervalo);
-        return;
-      }
-
-      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutos = Math.floor((diff / (1000 * 60)) % 60);
-      const segundos = Math.floor((diff / 1000) % 60);
-
-      contadorSpan.innerHTML = `${dias} dias, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+      const diffMs = agora - dataInicio;
+      const diasPassados = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      contadorSpan.innerHTML = diasPassados;
     }
 
-    // Atualiza o contador a cada segundo
-    const intervalo = setInterval(atualizarContador, 1000);
+    // Atualiza imediatamente e a cada segundo
     atualizarContador();
+    setInterval(atualizarContador, 1000);
 
-    // Função para criar corações
     function criarCoração() {
       const heart = document.createElement('div');
       heart.className = 'heart';
       heart.innerHTML = '❤️';
 
-      // Posicionamento aleatório na horizontal
       const posX = Math.random() * window.innerWidth;
       heart.style.left = `${posX}px`;
-
-      // Adiciona o coração ao corpo
       document.body.appendChild(heart);
-
-      // Remove o coração após a animação
       heart.addEventListener('animationend', () => {
         heart.remove();
       });
     }
-
-    // Dispara corações em intervalos
     setInterval(criarCoração, 300);
 
     // Evento do botão
     botao.addEventListener('click', () => {
-      // Esconde o botão ao clicar
       botao.style.display = 'none';
-
-      // Torna a imagem visível
       gato.style.display = 'block';
     });
   </script>
