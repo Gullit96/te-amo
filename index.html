@@ -108,32 +108,26 @@ const contador = document.getElementById("contador");
 // (ANO, MÊS-1, DIA, HORA, MINUTO, SEGUNDO)
 const dataInicio = new Date(2024, 6, 7, 0, 0, 0);
 
-function atualizarContador(){
+function atualizarContador() {
 
     const agora = new Date();
 
-    let diferenca = agora.getTime() - dataInicio.getTime();
+    let totalSegundos = Math.floor((agora.getTime() - dataInicio.getTime()) / 1000);
 
-    if(diferenca < 0){
-        contador.textContent = "0 dias, 0 horas, 0 minutos, 0 segundos";
-        return;
-    }
+    if (totalSegundos < 0) totalSegundos = 0;
 
-    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-    diferenca %= (1000 * 60 * 60 * 24);
+    const dias = Math.floor(totalSegundos / 86400);
+    totalSegundos %= 86400;
 
-    const horas = Math.floor(diferenca / (1000 * 60 * 60));
-    diferenca %= (1000 * 60 * 60);
+    const horas = Math.floor(totalSegundos / 3600);
+    totalSegundos %= 3600;
 
-    const minutos = Math.floor(diferenca / (1000 * 60));
-    diferenca %= (1000 * 60);
-
-    const segundos = Math.floor(diferenca / 1000);
+    const minutos = Math.floor(totalSegundos / 60);
+    const segundos = totalSegundos % 60;
 
     contador.textContent =
-    `${dias} dias, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+        `${dias} dias, ${horas.toString().padStart(2, '0')} horas, ${minutos.toString().padStart(2, '0')} minutos, ${segundos.toString().padStart(2, '0')} segundos`;
 }
-
 atualizarContador();
 setInterval(atualizarContador,1000);
 
