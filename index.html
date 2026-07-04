@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Surpresa de Amor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
@@ -16,36 +17,39 @@
       justify-content: center;
       height: 100vh;
       position: relative;
+      text-align: center;
     }
 
     /* Mensagem de feliz aniversário de namoro com contador */
     #mensagem {
       position: absolute;
-      top: 20px;
-      font-size: 24px;
+      top: 10px;
+      width: 100%;
+      font-size: 5vw; /* tamanho relativo à largura da tela */
       color: #d6336c;
       font-weight: bold;
       text-shadow: 1px 1px 2px #fff;
-      text-align: center;
+      padding: 0 10px;
     }
 
     /* Botão */
     #botao {
-      padding: 20px 40px;
-      font-size: 24px;
+      padding: 2vh 4vw; /* tamanho relativo */
+      font-size: 4vw;
       border: none;
       border-radius: 10px;
       background-color: #ff69b4;
       cursor: pointer;
       z-index: 1;
-      position: relative;
+      margin-top: 40px;
     }
 
     /* Imagem do gatinho */
     #gato {
       margin-top: 20px;
       display: none; /* inicialmente escondida */
-      max-width: 300px;
+      max-width: 80%;
+      height: auto;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       z-index: 1;
@@ -55,7 +59,7 @@
     .heart {
       position: absolute;
       bottom: -50px;
-      font-size: 24px;
+      font-size: 5vw; /* tamanho relativo */
       color: red;
       opacity: 0.8;
       animation: floatUp 4s linear forwards;
@@ -78,7 +82,7 @@
 <body>
   <div id="mensagem">Feliz <span id="contador">2 anos</span> de namoro! 💖</div>
   <button id="botao">Clique com carinho!</button>
-  <img id="gato" src="gatinho.jpg" alt="" />
+  <img id="gato" src="gatinho.jpg" alt="Gatinho fofo" />
 
   <script>
     const botao = document.getElementById('botao');
