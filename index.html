@@ -24,7 +24,7 @@
       position: absolute;
       top: 10px;
       width: 100%;
-      font-size: 8vw;
+      font-size: 6vw;
       color: #d6336c;
       font-weight: bold;
       text-shadow: 1px 1px 2px #fff;
@@ -75,7 +75,7 @@
   </style>
 </head>
 <body>
-  <div id="mensagem">Feliz <span id="contador">0</span> dias de namoro! 💖</div>
+  <div id="mensagem">Feliz <span id="contador">0 dias, 0 horas, 0 minutos, 0 segundos</span> de namoro! 💖</div>
   <button id="botao">Clique com carinho!</button>
   <img id="gato" src="gatinho.jpg" alt="Gatinho fofo" />
 
@@ -90,13 +90,18 @@
     function atualizarContador() {
       const agora = new Date();
       const diffMs = agora - dataInicio;
-      const diasPassados = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      contadorSpan.innerHTML = diasPassados;
+
+      const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diffMs / (1000 * 60)) % 60);
+      const segundos = Math.floor((diffMs / 1000) % 60);
+
+      contadorSpan.innerHTML = `${dias} dias, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
     }
 
-    // Atualiza imediatamente e a cada segundo
-    atualizarContador();
+    // Atualiza o contador a cada segundo
     setInterval(atualizarContador, 1000);
+    atualizarContador();
 
     function criarCoração() {
       const heart = document.createElement('div');
@@ -112,7 +117,6 @@
     }
     setInterval(criarCoração, 300);
 
-    // Evento do botão
     botao.addEventListener('click', () => {
       botao.style.display = 'none';
       gato.style.display = 'block';
